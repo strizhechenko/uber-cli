@@ -3,7 +3,7 @@
 . env/bin/activate
 
 date +%H:%M 
-while ! ./is_uber_cheap.py "${DST:-home}"; do
+while ! ./is_uber_cheap.py "${SRC:-home}"; do
 	sleep "${INTERVAL:-60}"
 	date +%H:%M
 done
