@@ -10,8 +10,8 @@ from uber_rides.client import UberRidesClient
 
 INFLUXDB_URL = getenv('INFLUXDB_URL', 'http://127.0.0.1:8086/write?db=uber')
 SERVER_TOKEN = getenv('SERVER_TOKEN')
-PLACES = ('home', 'work', 'vost', 'engl')
-BLACKLISTED_ROUTES = ('home2engl', 'vost2engl', 'engl2work')
+PLACES = getenv('PLACES').split()
+BLACKLISTED_ROUTES = getenv('BLACKLISTED_ROUTES').split()
 
 
 def get_point(name):
