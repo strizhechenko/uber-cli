@@ -7,7 +7,8 @@ from pygeocoder import Geocoder
 
 
 def addr2geo(addr):
-    return Geocoder().geocode(addr).coordinates()
+    return Geocoder().geocode(addr).coordinates
 
 if __name__ == '__main__':
-    print addr2geo(" ".join(argv[1:]))
+    addr = " ".join(argv[1:])
+    print addr2geo(addr)
