@@ -12,9 +12,12 @@ HOME_LAT = getenv('HOME_LAT')
 HOME_LNG = getenv('HOME_LNG')
 WORK_LAT = getenv('WORK_LAT')
 WORK_LNG = getenv('WORK_LNG')
+VOST_LAT = getenv('VOST_LAT')
+VOST_LNG = getenv('VOST_LNG')
 SERVER_TOKEN = getenv('SERVER_TOKEN')
 HOME_POINT = (HOME_LAT, HOME_LNG)
 WORK_POINT = (WORK_LAT, WORK_LNG)
+VOST_POINT = (VOST_LAT, VOST_LNG)
 
 
 def uber_start_price_estimate(client, start_point, end_point):
@@ -45,10 +48,21 @@ def send2influxdb(price, path):
 def main():
     """ Main scenario """
     client = UberRidesClient(Session(server_token=SERVER_TOKEN))
+
     price = uber_start_price_estimate(client, HOME_POINT, WORK_POINT)
     send2influxdb(price, 'home2work')
     price = uber_start_price_estimate(client, WORK_POINT, HOME_POINT)
     send2influxdb(price, 'work2home')
+
+    price = uber_start_price_estimate(client, WORK_POINT, VOST_POINT)
+    send2influxdb(price, 'work2vost')
+    price = uber_start_price_estimate(client, VOST_POINT, WORK_POINT)
+    send2influxdb(price, 'vost2work')
+
+    price = uber_start_price_estimate(client, HOME_POINT, VOST_POINT)
+    send2influxdb(price, 'home2vost')
+    price = uber_start_price_estimate(client, VOST_POINT, HOME_POINT)
+    send2influxdb(price, 'vost2home')
 
 
 if __name__ == '__main__':
