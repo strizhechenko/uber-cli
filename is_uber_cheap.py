@@ -6,32 +6,10 @@ from os import getenv
 from sys import argv
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
+from influxdb_agent import uber_start_price_estimate, get_point
 
-UBER_START = '35258bbb-ea10-473d-a328-cd542f23fae8'
-HOME_LAT = getenv('HOME_LAT')
-HOME_LNG = getenv('HOME_LNG')
-WORK_LAT = getenv('WORK_LAT')
-WORK_LNG = getenv('WORK_LNG')
+PLACES = getenv('PLACES').split()
 SERVER_TOKEN = getenv('SERVER_TOKEN')
-
-
-def uber_surge_and_estimate(client, start_lat, start_lng, end_lat, end_lng):
-    prices = client.get_price_estimates(start_lat, start_lng, end_lat, end_lng).json.get('prices')
-    price = None
-    for product in prices:
-        if product['localized_display_name'] == u'uberSTART':
-            price = product
-    if not price:
-        raise ValueError("No response from UBER")
-    return price.get("estimate"), price.get("surge_multiplier")
-
-
-def home_to_work(client):
-    return uber_surge_and_estimate(client, HOME_LAT, HOME_LNG, WORK_LAT, WORK_LNG)
-
-
-def work_to_home(client):
-    return uber_surge_and_estimate(client, WORK_LAT, WORK_LNG, HOME_LAT, HOME_LNG)
 
 
 def show_result(estimate, surge):
@@ -42,8 +20,9 @@ def show_result(estimate, surge):
 def main():
     """ Main scenario """
     client = UberRidesClient(Session(server_token=SERVER_TOKEN))
-    func = 'work' in argv and work_to_home or home_to_work
-    estimate, surge = func(client)
+    src, dst = argv[1], argv[2]
+    points = {k: get_point(k) for k in PLACES}
+    estimate, surge = uber_start_price_estimate(client, points.get(src), points.get(dst))
     show_result(estimate, surge)
     if surge > 1:
         exit(1)
