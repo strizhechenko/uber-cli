@@ -38,6 +38,11 @@ class UberCLI(object):
         return writers.PlainWriter
 
     @staticmethod
+    def alert(message):
+        print message
+        os.system("say {0}".format(message))
+
+    @staticmethod
     def read_options():
         parser = optparse.OptionParser()
         parser.add_option('-i', dest='interval', type="int", metavar='SECONDS', default=30,
@@ -48,6 +53,8 @@ class UberCLI(object):
         parser.add_option('--influxdb-format', dest='influxdb_writer', action='store_true', default=False, help='writer format')
         parser.add_option('--influxdb-url', dest='influxdb', metavar='URL',
                           help='Example: http://127.0.0.1:8086/write?db=my_db')
+        parser.add_option('-f', '--fair-price', dest='fair_price', type="int",
+                          help='defines fair price that ok to order taxi')
         return parser.parse_args()
 
     @staticmethod
@@ -69,7 +76,11 @@ class UberCLI(object):
         return client.get_price_estimates(src[0], src[1], dst[0], dst[1]).json.get('prices')
 
     def oneshot(self, src, dst):
-        self.writer.write(self.price(src, dst), self.places)
+        price = self.price(src, dst)
+        self.writer.write(price, self.places)
+        if self.options.fair_price and price[0].get(u'low_estimate') < self.options.fair_price:
+            self.alert(self.conf.get('PHRASE'))
+            exit(0)
 
     def watch(self, src, dst):
         try:
