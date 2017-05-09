@@ -2,3 +2,7 @@ env/
 *.pyc
 env.sh
 *.db
+.idea
+build/
+dist/
+*.egg-info/

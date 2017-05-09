@@ -24,4 +24,11 @@ pip install -r requirements.txt
 
 ## Воткнуть это в env.sh
 
-# Запуск
+# ~/.uberrc
+
+```
+DEFAULT_CITY: "Екатеринбург"
+DEFAULT_TYPE: "uberSTART"
+SERVER_TOKEN: "PUT-YOUR-SERVER-TOKEN-HERE"
+PHRASE: "Yo-ho-ho, uber is cheap"
+```

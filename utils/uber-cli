@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+from uber_cli import UberCLI
+
+if __name__ == '__main__':
+    UberCLI().main()
