@@ -23,6 +23,10 @@ class UberCLI(object):
     def __init__(self):
         self.conf = self.read_config()
         self.options, self.args = self.read_options()
+        if self.conf.get('POINTS'):
+            for n, arg in enumerate(self.args):
+                if arg in self.conf.get('ALIASES'):
+                    self.args[n] = self.conf.get('ALIASES')[arg].encode('utf-8')
         self.writer = self.choose_writer()(self.options)
         assert len(self.args) == 2, "Usage: uber-cli <src> <dst>"
         self.places = {
