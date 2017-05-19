@@ -14,11 +14,11 @@ def read(*paths):
 
 setuptools.setup(
     name='uber-cli',
-    version='0.0.2',
+    version='0.0.3',
     author='Oleg Strizhechenko',
     author_email='oleg.strizhechenko@gmail.com',
     license='MIT',
-    url='https://github.com/strizhechenko/netutils-linux',
+    url='https://github.com/strizhechenko/uber-cli',
     keywords='uber cli rides taxi util',
     description='Unofficial read-only Uber CLI on top of uber-rides.',
     packages=setuptools.find_packages(exclude=['tests*']),
