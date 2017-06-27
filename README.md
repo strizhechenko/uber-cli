@@ -1,3 +1,5 @@
+[![Code Health](https://landscape.io/github/strizhechenko/uber-cli/master/landscape.svg?style=flat)](https://landscape.io/github/strizhechenko/uber-cli/master)
+
 # Как выглядит
 
 ## Утилита
