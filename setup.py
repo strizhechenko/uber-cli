@@ -14,15 +14,19 @@ def read(*paths):
 
 setuptools.setup(
     name='uber-cli',
-    version='0.0.3',
+    version='0.0.4',
     author='Oleg Strizhechenko',
     author_email='oleg.strizhechenko@gmail.com',
     license='MIT',
     url='https://github.com/strizhechenko/uber-cli',
     keywords='uber cli rides taxi util',
     description='Unofficial read-only Uber CLI on top of uber-rides.',
-    packages=setuptools.find_packages(exclude=['tests*']),
-    scripts=[os.path.join('utils/', script) for script in os.listdir('utils/')],
+    packages=['uber_cli'],
+    entry_points={
+        'console_scripts': [
+            'uber-cli=uber_cli.__init__:main',
+        ],
+    },
     install_requires=['pyyaml', 'uber-rides', 'pygeocoder'],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -30,7 +34,7 @@ setuptools.setup(
         'Operating System :: MacOS',
         'Operating System :: POSIX',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development',
         'Topic :: Utilities',
     ],
