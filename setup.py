@@ -14,7 +14,7 @@ def read(*paths):
 
 setuptools.setup(
     name='uber-cli',
-    version='0.0.4',
+    version='1.0.0',
     author='Oleg Strizhechenko',
     author_email='oleg.strizhechenko@gmail.com',
     license='MIT',
