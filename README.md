@@ -1,3 +1,5 @@
+# Всё плохо, API сломали когда объединили Uber и Яндекс
+
 [![Code Health](https://landscape.io/github/strizhechenko/uber-cli/master/landscape.svg?style=flat)](https://landscape.io/github/strizhechenko/uber-cli/master)
 
 # Как выглядит
